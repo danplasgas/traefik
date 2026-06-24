@@ -1,0 +1,21 @@
+[Unit]
+Description=Traefik Admin UI
+After=network-online.target traefik-admin-helper.service
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=dan
+Group=dan
+WorkingDirectory=/home/dan/work/traefik-src
+ExecStart=/usr/bin/python3 /home/dan/work/traefik-src/admin-ui/serve.py
+Restart=on-failure
+RestartSec=2
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=full
+ProtectHome=false
+ReadOnlyPaths=/home/dan/work/traefik-src/admin-ui
+
+[Install]
+WantedBy=multi-user.target

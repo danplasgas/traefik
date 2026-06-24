@@ -13,6 +13,8 @@
 /traefik.yml
 *.log
 *.exe
+*.pyc
+__pycache__/
 cover.out
 vendor/
 plugins-storage/

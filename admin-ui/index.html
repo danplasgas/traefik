@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Sunny Admin</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">sunny debian system</p>
+        <h1>Admin</h1>
+      </div>
+      <nav class="toplinks">
+        <a href="http://traefik.sunny/dashboard/">Traefik dashboard</a>
+        <a href="traefik-api/rawdata">Traefik API</a>
+      </nav>
+    </header>
+
+    <div class="shell">
+      <aside class="sidebar" aria-label="Admin modules">
+        <a href="/" data-nav="/">Overview</a>
+        <a href="/traefik" data-nav="/traefik">Traefik</a>
+        <a href="/agentmemory" data-nav="/agentmemory">Agent Memory</a>
+        <a href="/services" data-nav="/services">Services</a>
+        <a href="/logs" data-nav="/logs">Logs</a>
+        <a href="/files" data-nav="/files">Files</a>
+      </aside>
+
+      <main>
+        <div id="helper-warning" class="notice hidden"></div>
+        <section id="attention-panel" class="attention hidden"></section>
+
+        <section data-module="/" class="module">
+          <div class="module-heading">
+            <div>
+              <h2>Overview</h2>
+              <p>Host status, managed services, and current routing shape.</p>
+            </div>
+            <button id="refresh-button" type="button">Refresh</button>
+          </div>
+          <section class="status-grid" aria-label="System status">
+            <article>
+              <span id="hostname">-</span>
+              <p>Host</p>
+            </article>
+            <article>
+              <span id="uptime">-</span>
+              <p>Uptime</p>
+            </article>
+            <article>
+              <span id="router-count">-</span>
+              <p>Routers</p>
+            </article>
+            <article>
+              <span id="helper-state">Checking</span>
+              <p>Write helper</p>
+            </article>
+          </section>
+          <div class="metrics-grid">
+            <article class="panel">
+              <h3>CPU</h3>
+              <div class="meter"><span id="cpu-meter"></span></div>
+              <p id="cpu-text">-</p>
+            </article>
+            <article class="panel">
+              <h3>Memory</h3>
+              <div class="meter"><span id="memory-meter"></span></div>
+              <p id="memory-text">-</p>
+            </article>
+            <article class="panel">
+              <h3>Disk</h3>
+              <div id="disk-list" class="disk-list"></div>
+            </article>
+          </div>
+          <section class="panel">
+            <h3>Recent Failures</h3>
+            <div id="failures-list" class="compact-list"></div>
+          </section>
+        </section>
+
+        <section data-module="/traefik" class="module hidden">
+          <div class="module-heading">
+            <div>
+              <h2>Traefik</h2>
+              <p>File-provider route groups. Core and admin groups are protected.</p>
+            </div>
+          </div>
+          <div id="traefik-route-groups" class="group-stack"></div>
+        </section>
+
+        <section data-module="/agentmemory" class="module hidden">
+          <div class="module-heading">
+            <div>
+              <h2>Agent Memory</h2>
+              <p>Route group, service health, and useful files for the memory UI.</p>
+            </div>
+          </div>
+          <div id="agentmemory-summary" class="summary-grid"></div>
+          <div id="agentmemory-route-groups" class="group-stack"></div>
+        </section>
+
+        <section data-module="/services" class="module hidden">
+          <div class="module-heading">
+            <div>
+              <h2>Services</h2>
+              <p>Allowlisted systemd units. V1 exposes start and restart actions only.</p>
+            </div>
+          </div>
+          <div id="services-table" class="service-list"></div>
+        </section>
+
+        <section data-module="/logs" class="module hidden">
+          <div class="module-heading">
+            <div>
+              <h2>Logs</h2>
+              <p>Recent journal entries for allowlisted services.</p>
+            </div>
+            <button id="load-logs-button" type="button">Load logs</button>
+          </div>
+          <select id="log-service-select"></select>
+          <pre id="logs-output" class="log-output">Select a service and load logs.</pre>
+        </section>
+
+        <section data-module="/files" class="module hidden">
+          <div class="module-heading">
+            <div>
+              <h2>Files</h2>
+              <p>View allowlisted system files; edit only safe route fragments.</p>
+            </div>
+            <button id="save-file-button" type="button" disabled>Save file</button>
+          </div>
+          <div class="file-toolbar">
+            <select id="file-select"></select>
+            <button id="load-file-button" type="button">Load file</button>
+          </div>
+          <div id="file-meta" class="file-meta"></div>
+          <textarea id="file-editor" spellcheck="false" readonly></textarea>
+        </section>
+      </main>
+    </div>
+
+    <script src="app.js" type="module"></script>
+  </body>
+</html>
