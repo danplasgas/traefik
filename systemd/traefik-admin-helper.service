@@ -16,7 +16,7 @@ PrivateTmp=true
 ProtectSystem=full
 ProtectHome=false
 ReadOnlyPaths=/home/dan/work/tmweb/infra/traefik/write-helper /home/dan/work/tools
-ReadWritePaths=/home/dan/work/traefik/conf /home/dan/work/traefik/logs /home/dan/work/traefik/run
+ReadWritePaths=/srv/tmweb/traefik/conf /srv/tmweb/traefik/logs /srv/tmweb/traefik/run
 
 [Install]
 WantedBy=multi-user.target
