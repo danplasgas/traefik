@@ -7,15 +7,15 @@ Wants=network-online.target
 Type=simple
 User=dan
 Group=dan
-WorkingDirectory=/home/dan/work/traefik-src
-ExecStart=/usr/bin/python3 /home/dan/work/traefik-src/admin-ui/serve.py
+WorkingDirectory=/home/dan/work/tmweb/infra/traefik
+ExecStart=/usr/bin/python3 /home/dan/work/tmweb/infra/traefik/admin-ui/serve.py
 Restart=on-failure
 RestartSec=2
 NoNewPrivileges=true
 PrivateTmp=true
 ProtectSystem=full
 ProtectHome=false
-ReadOnlyPaths=/home/dan/work/traefik-src/admin-ui
+ReadOnlyPaths=/home/dan/work/tmweb/infra/traefik/admin-ui
 
 [Install]
 WantedBy=multi-user.target
