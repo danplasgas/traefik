@@ -63,13 +63,20 @@ sudo systemctl restart traefik-admin-helper traefik-admin-ui
 ## Step 6 — Validate
 
 ```bash
-systemctl status traefik-admin-helper traefik-admin-ui
-curl -sf http://localhost:8080/ping && echo "OK"
-curl -sf https://foreman.tmweb.uk/ -o /dev/null -w "%{http_code}\n"
-curl -sf https://workpacker.taylormadecontrols.uk/ -o /dev/null -w "%{http_code}\n"
+systemctl status traefik-admin-helper traefik-admin-ui --no-pager
+systemctl show traefik-admin-helper.service -p WorkingDirectory -p ExecStart --no-pager
+systemctl show traefik-admin-ui.service -p WorkingDirectory -p ExecStart --no-pager
+curl -sf http://127.0.0.1:8091/ -o /dev/null -w "admin-ui %{http_code}\n"
+curl -sf http://127.0.0.1:8092/health -o /dev/null -w "helper-health %{http_code}\n"
+curl -sf -H "Host: tmweb.uk" http://127.0.0.1:8088/ -o /dev/null -w "tmweb.uk %{http_code}\n"
+curl -sf -H "Host: admin.tmweb.uk" http://127.0.0.1:8088/ -o /dev/null -w "admin.tmweb.uk %{http_code}\n"
+curl -sf -H "Host: foreman.tmweb.uk" http://127.0.0.1:8088/ -o /dev/null -w "foreman.tmweb.uk %{http_code}\n"
+curl -sf -H "Host: schedule.tmweb.uk" http://127.0.0.1:8088/ -o /dev/null -w "schedule.tmweb.uk %{http_code}\n"
+curl -sf -H "Host: planner.tmweb.uk" http://127.0.0.1:8088/ -o /dev/null -w "planner.tmweb.uk %{http_code}\n"
+curl -sf -H "Host: workpacker.taylormadecontrols.uk" http://127.0.0.1:8088/ -o /dev/null -w "workpacker.taylormadecontrols.uk %{http_code}\n"
 ```
 
-Expected: both systemctl statuses green, ping returns `OK`, HTTP 200 from both public routes.
+Expected: both systemctl statuses green, admin UI and helper health return HTTP 200, Traefik host-header checks on `127.0.0.1:8088` route correctly, and Workpacker may return an authentication redirect. Do not validate `localhost:8080/ping` unless Traefik config explicitly enables a ping endpoint on that port.
 
 ## Rollback
 
